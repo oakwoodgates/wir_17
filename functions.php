@@ -2,66 +2,30 @@
 
 
 //Setup Default Groups Avatar
-function my_default_get_group_avatar($avatar) {
+function my_default_get_group_avatar( $avatar ) {
 	global $bp, $groups_template;
 
-	if ( strpos($avatar,'group-avatars') ) {
+	if ( strpos( $avatar, 'group-avatars' ) ) {
 		return $avatar;
 	} else {
-		$custom_avatar = 'https://app.wheninroamtravelapp.com/wp-content/uploads/2017/06/Apple1024-1.png';
+		$dir = get_stylesheet_directory_uri();
+		$def = $dir . '/images/default-list-image.png';
 
 		if ( $bp->current_action == "" )
-			return '<img class="avatar" alt="' . esc_attr( $groups_template->group->name ) . '" src="'.$custom_avatar.'" width="'.BP_AVATAR_THUMB_WIDTH.'" height="'.BP_AVATAR_THUMB_HEIGHT.'" />';
+			return '<img class="avatar" alt="' . esc_attr( $groups_template->group->name ) . '" src="'.$def.'" width="'.BP_AVATAR_THUMB_WIDTH.'" height="'.BP_AVATAR_THUMB_HEIGHT.'" />';
 		else
-			return '<img class="avatar" alt="' . esc_attr( $groups_template->group->name ) . '" src="'.$custom_avatar.'" width="'.BP_AVATAR_FULL_WIDTH.'" height="'.BP_AVATAR_FULL_HEIGHT.'" />';
+			return '<img class="avatar" alt="' . esc_attr( $groups_template->group->name ) . '" src="'.$def.'" width="'.BP_AVATAR_FULL_WIDTH.'" height="'.BP_AVATAR_FULL_HEIGHT.'" />';
 	}
 }
 add_filter( 'bp_get_group_avatar', 'my_default_get_group_avatar');
 
 
-function replace_class( $items, $menu, $args ) {
-    // Iterate over the items to search and destroy
-	//WHEN-14
-	if ( is_user_logged_in() )
-    {
-		foreach ( $items as $key => $item ) {
-			try {
-				if ( $item->title == "Logout" )
-				{
-					$item->url = "https://app.wheninroamtravelapp.com/logout/?_wpnonce=" . wp_create_nonce( 'log-out' ) ;
-				}
-			} catch (Exception $err) {
-            }
-			if ( $item->object_id == 712 )
-			{
-				unset( $items[$key] );
-			}
-		}
-	}
-    return $items;
-}
-add_filter( 'wp_get_nav_menu_items', 'replace_class', null, 3 );
-
-
-//add_action('wp_head', 'show_template');
-function show_template() {
-	global $template; print_r($template);
-}
-
-function ch_scripts() {
-
-	wp_localize_script( "add_bp_group", 'bp_group_add',
-	    array(
-	        'ajaxUrl' => admin_url( 'admin-ajax.php' )
-	    )
-	);
-
-	wp_enqueue_script( "chscript", "/wp-content/themes/wir_17/js/script.js", array( 'jquery' ));
-
+function roam_theme_scripts() {
 	$dir = get_stylesheet_directory_uri();
-	wp_enqueue_style('main', $dir . '/css/main.css' );
+	wp_enqueue_script( 'custom', $dir . '/js/custom.js', array( 'jquery' ) );
+	wp_enqueue_style( 'main', $dir . '/css/main.css' );
 }
-add_action( 'wp_enqueue_scripts', 'ch_scripts' );
+add_action( 'wp_enqueue_scripts', 'roam_theme_scripts' );
 
 
 function new_list_process() {
