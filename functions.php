@@ -58,7 +58,8 @@ function ch_scripts() {
 
    wp_enqueue_script( "chscript", "/wp-content/themes/wir_17/js/script.js", array( 'jquery' ));
 
-	 $d = get_stylesheet_directory_uri();
+	 $dir = get_stylesheet_directory_uri();
+	 wp_enqueue_style('main', $dir . '/css/main.css' );
 //	 wp_enqueue_style('x', $d . '/css/buddypress.css' );
 //	 wp_enqueue_style('y', $d . '/css/twentythirteen.css' );
 }
