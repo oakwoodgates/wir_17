@@ -14,7 +14,7 @@
 		<div id="template-notices" role="alert" aria-atomic="true">
 			<?php
 			/** This action is documented in bp-templates/bp-legacy/buddypress/activity/index.php */
-			do_action( 'template_notices' ); 
+			do_action( 'template_notices' );
 
 			if ( !empty($_POST['create'])){
 
@@ -34,7 +34,7 @@
 						'name' => $name
 					);
 
-					$id = groups_create_group( $group_args ); 
+					$id = groups_create_group( $group_args );
 
 					if ( $id ) {
 						do_action( 'groups_group_create_complete', $id );
