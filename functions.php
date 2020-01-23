@@ -23,7 +23,7 @@ add_filter( 'bp_get_group_avatar', 'my_default_get_group_avatar');
 function roam_theme_scripts() {
 	$dir = get_stylesheet_directory_uri();
 	wp_enqueue_script( 'custom', $dir . '/js/custom.js', array( 'jquery' ) );
-	wp_enqueue_style( 'main', $dir . '/css/main.css' );
+	wp_enqueue_style( 'main', $dir . '/css/main.css', array( 'twentythirteen-fonts', 'genericons', 'twentythirteen-style' ) );
 }
 add_action( 'wp_enqueue_scripts', 'roam_theme_scripts' );
 
